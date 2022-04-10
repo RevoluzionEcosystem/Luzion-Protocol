@@ -1,4 +1,3 @@
-
 // SPDX-License-Identifier: MIT
 
 /**
@@ -1322,9 +1321,8 @@ contract LuzionProtocol is ERC20, Ownable {
     uint256 public feeDenominator;
     uint256 public gonsPerFragment;
     uint256 public gonSwapThreshold;
-    uint256 public targetLiquidity = 50;
-    uint256 public targetLiquidityDenominator = 100;
-
+    uint256 public targetLiquidity;
+    uint256 public targetLiquidityDenominator;
 
     bool public inSwap;
     bool public swapEnabled;
@@ -1394,7 +1392,7 @@ contract LuzionProtocol is ERC20, Ownable {
         supplyMax = _supplyMax.mul(10**5);
         gonsTotal = uintMax - (uintMax % supplyInitialFragment);
         gonsPerFragment = gonsTotal.div(supplyTotal);
-        gonSwapThreshold = gonsTotal.mul(10).div(10000);
+        gonSwapThreshold = gonsTotal.div(10000).mul(10);
 
         _gonBalances[_msgSender()] = gonsTotal;
 
@@ -1422,6 +1420,7 @@ contract LuzionProtocol is ERC20, Ownable {
     event ChangeRouter(address caller, address prevRouter, address newRouter);
     event ChangePairContract(address caller, address prevPairContract, address newPairContract);
     event BotBlacklisted(address botAddress);
+
 
     /** FUNCTION **/
 
@@ -1490,7 +1489,7 @@ contract LuzionProtocol is ERC20, Ownable {
      */
     function setSwapBackSettings(bool _enabled, uint256 _numerator, uint256 _denominator) external authorized {
         swapEnabled = _enabled;
-        gonSwapThreshold = gonsTotal.mul(_numerator).div(_denominator);
+        gonSwapThreshold = gonsTotal.div(_denominator).mul(_numerator);
     }
 
     /**
