@@ -6,7 +6,7 @@
  *
  * @custom:website https://luzion.io
  * @custom:whitepaper https://docs.luzion.io
- * @custom:telegram https://t.me/revoluziontoken
+ * @custom:telegram https://t.me/revoluzionecosystem
  */
 
 pragma solidity ^0.8.13;
